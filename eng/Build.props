@@ -1,5 +1,5 @@
 <Project>
-  <ItemGroup>
+  <ItemGroup Condition=" '$(ArcadeBuildTarball)' != 'true' ">
 
     <ProjectToBuild Include="$(RepoRoot)src\linker\Mono.Linker.csproj" />
     <ProjectToBuild Include="$(RepoRoot)src\ILLink.Tasks\ILLink.Tasks.csproj" />
@@ -13,6 +13,9 @@
     <ProjectToBuild Include="$(RepoRoot)test\ILLink.RoslynAnalyzer.Tests\ILLink.RoslynAnalyzer.Tests.csproj" />
     <ProjectToBuild Include="$(RepoRoot)src\linker\ref\Mono.Linker.csproj" />
     <ProjectToBuild Include="$(RepoRoot)src\tlens\tlens.csproj" />
-
+  </ItemGroup>
+  <ItemGroup Condition=" '$(ArcadeBuildTarball)' == 'true' " >
+    <ProjectToBuild Include="$(RepoRoot)src/SourceBuild/Arcade/src/SourceBuild.Tasks.csproj" BuildInParallel="false" />
+    <ProjectToBuild Include="$(RepoRoot)src/SourceBuild/tarball/BuildSourceBuildTarball.proj" BuildInParallel="false" />
   </ItemGroup>
 </Project>
