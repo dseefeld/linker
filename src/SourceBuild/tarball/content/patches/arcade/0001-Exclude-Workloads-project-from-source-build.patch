@@ -1,0 +1,24 @@
+From 9c66de4399253486bc7030226b4524174c115c55 Mon Sep 17 00:00:00 2001
+From: dseefeld <dseefeld@microsoft.com>
+Date: Thu, 3 Jun 2021 15:17:02 +0000
+Subject: [PATCH] Exclude Workloads project from source-build
+
+---
+ .../src/Microsoft.DotNet.Build.Tasks.Workloads.csproj            | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/Microsoft.DotNet.Build.Tasks.Workloads/src/Microsoft.DotNet.Build.Tasks.Workloads.csproj b/src/Microsoft.DotNet.Build.Tasks.Workloads/src/Microsoft.DotNet.Build.Tasks.Workloads.csproj
+index 367c432d..79b0443d 100644
+--- a/src/Microsoft.DotNet.Build.Tasks.Workloads/src/Microsoft.DotNet.Build.Tasks.Workloads.csproj
++++ b/src/Microsoft.DotNet.Build.Tasks.Workloads/src/Microsoft.DotNet.Build.Tasks.Workloads.csproj
+@@ -11,6 +11,7 @@
+     <NoWarn>$(NoWarn);NU5127</NoWarn>
+     <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
+     <RootNamespace>Microsoft.DotNet.Build.Tasks.Workloads</RootNamespace>
++    <ExcludeFromSourcebuild>true</ExcludeFromSourcebuild>
+   </PropertyGroup>
+ 
+   <ItemGroup>
+-- 
+2.25.4
+
