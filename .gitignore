@@ -30,6 +30,7 @@ bin/
 # arcade artifacts
 .dotnet
 .packages
+*.binlog
 artifacts
 
 test/Mono.Linker.Tests/TestResults.xml
