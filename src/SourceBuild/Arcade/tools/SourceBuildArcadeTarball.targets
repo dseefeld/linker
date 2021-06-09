@@ -16,11 +16,9 @@
 
   <PropertyGroup>
     <TarballDir>$(RepoRoot)artifacts/tarball/</TarballDir>
-    <LogDir>$(RepoRoot)artifacts/log/</LogDir>
     <TarballSourceDir>$(TarballDir)src/</TarballSourceDir>
-    <TarballEngDir>$(TarballDir)eng/</TarballEngDir>
     <TarballGitInfoDir>$(TarballDir)git-info/</TarballGitInfoDir>
-    <CloneVerbosity>quiet</CloneVerbosity> <!-- Support quite and full -->
+    <CloneVerbosity>quiet</CloneVerbosity> <!-- Support quiet and full -->
   </PropertyGroup>
 
   <Target Name="CreateTarballDir" >
@@ -29,16 +27,14 @@
     <RemoveDir Directories='$(TarballDir)' Condition=" EXISTS('$(TarballDir)') " />
     <Error Text="Tarball directory not specified.  Pass /p:TarballDir=[new dir name] to specify a tarball directory." Condition=" '$(TarballDir)' == '' " />
     <Error Text="Tarball directory already exists: $(TarballDir)" Condition=" '$(TarballDir)' != '' AND EXISTS('$(TarballDir)') " />
+    <Error Text="Tarball directory requires trailing slash: $(TarballDir)" Condition=" !HasTrailingSlash('$(TarballDir)') " />
 
     <MakeDir Directories="$(TarballDir)" Condition=" '$(TarballDir)' != '' " />
-    <MakeDir Directories="$(LogDir)" Condition=" '$(LogDir)' != '' " />
     <MakeDir Directories="$(TarballSourceDir)" Condition=" '$(TarballSourceDir)' != '' " />
-    <MakeDir Directories="$(TarballEngDir)" Condition=" '$(TarballEngDir)' != '' " />
     <MakeDir Directories="$(TarballGitInfoDir)" Condition=" '$(TarballGitInfoDir)' != '' " />
   </Target>
 
   <Target Name="SetupSelfGithubInfo" Condition=" '$(IsRootRepo)' != 'true' ">
-
 
     <Exec
       Command="cd $(RepoRoot);git remote get-url origin"
@@ -75,11 +71,15 @@
       <RepoSha>%(SourceBuildRepos.Sha)</RepoSha>
     </PropertyGroup>
 
+    <!-- Remove root repo from SourceBuildRepos so it doesn't try to clone twice -->
+    <ItemGroup>
+      <SourceBuildRepos Remove="@(SourceBuildRepos)" />
+    </ItemGroup>
   </Target>
 
-  <!-- TODO: Temporarily don't process sbrp repo until we have project for it in repos/ dir-->
+  <!-- DSEEFELD TODO: Temporarily don't process sbrp repo until we have project for it in repos/ dir-->
   <Target Name="CloneRepoAndDependentsRecursive" 
-    DependsOnTargets="GetSourceBuildIntermediateNupkgNameConvention" 
+    DependsOnTargets="GetSourceBuildIntermediateNupkgNameConvention"
     Condition=" '$(SourceBuildRepoName)' != 'source-build-reference-packages' ">
     
     <Message Text="--> Start Cloning Repo $(SourceBuildRepoName)" Importance="High" />
@@ -104,10 +104,6 @@
     <!-- <Exec 
       Command="rm -rf .git" 
       WorkingDirectory="$(TarballRepoSourceDir)" /> -->
-
-    <ItemGroup>
-      <SourceBuildRepos Remove="@(SourceBuildRepos)" />
-    </ItemGroup>
 
     <Tarball_ReadSourceBuildIntermediateNupkgDependencies
       VersionDetailsXmlFile="$([MSBuild]::NormalizePath($(VersionDetailsFileName)))"
