@@ -1,15 +1,21 @@
-From 9a82c1e56ecfc4840f5d6f52f4d09185b384b1d5 Mon Sep 17 00:00:00 2001
+From a0c1678744428a1ba609776751a9f3a9e20dfe04 Mon Sep 17 00:00:00 2001
 From: dseefeld <dseefeld@microsoft.com>
-Date: Thu, 3 Jun 2021 15:27:21 +0000
+Date: Fri, 11 Jun 2021 19:39:31 +0000
 Subject: [PATCH] Exclude test projects from source-build
 
 ---
  .../Microsoft.Arcade.Common.Tests.csproj                         | 1 +
  .../Microsoft.Arcade.Test.Common.csproj                          | 1 +
- 2 files changed, 2 insertions(+)
+ .../Microsoft.DotNet.Build.Tasks.Feed.Tests.csproj               | 1 +
+ .../Microsoft.DotNet.Build.Tasks.VisualStudio.Tests.csproj       | 1 +
+ .../Microsoft.DotNet.Internal.DependencyInjection.Testing.csproj | 1 +
+ .../Microsoft.DotNet.PackageValidation.Tests.csproj              | 1 +
+ .../Microsoft.DotNet.SignTool.Tests.csproj                       | 1 +
+ .../Microsoft.DotNet.VersionTools.Tasks.Tests.csproj             | 1 +
+ 8 files changed, 8 insertions(+)
 
 diff --git a/src/Common/Microsoft.Arcade.Common.Tests/Microsoft.Arcade.Common.Tests.csproj b/src/Common/Microsoft.Arcade.Common.Tests/Microsoft.Arcade.Common.Tests.csproj
-index 653588d2..190b45ea 100644
+index 653588d2..98b20958 100644
 --- a/src/Common/Microsoft.Arcade.Common.Tests/Microsoft.Arcade.Common.Tests.csproj
 +++ b/src/Common/Microsoft.Arcade.Common.Tests/Microsoft.Arcade.Common.Tests.csproj
 @@ -3,6 +3,7 @@
@@ -21,13 +27,85 @@ index 653588d2..190b45ea 100644
  
    <ItemGroup>
 diff --git a/src/Common/Microsoft.Arcade.Test.Common/Microsoft.Arcade.Test.Common.csproj b/src/Common/Microsoft.Arcade.Test.Common/Microsoft.Arcade.Test.Common.csproj
-index 6b2a68ba..989e5895 100644
+index 6b2a68ba..92f9eeea 100644
 --- a/src/Common/Microsoft.Arcade.Test.Common/Microsoft.Arcade.Test.Common.csproj
 +++ b/src/Common/Microsoft.Arcade.Test.Common/Microsoft.Arcade.Test.Common.csproj
 @@ -3,6 +3,7 @@
    <PropertyGroup>
      <TargetFrameworks>netcoreapp3.1;net472</TargetFrameworks>
      <IsTestProject>true</IsTestProject>
++    <ExcludeFromSourceBuild>true</ExcludeFromSourceBuild>
+   </PropertyGroup>
+ 
+   <ItemGroup>
+diff --git a/src/Microsoft.DotNet.Build.Tasks.Feed.Tests/Microsoft.DotNet.Build.Tasks.Feed.Tests.csproj b/src/Microsoft.DotNet.Build.Tasks.Feed.Tests/Microsoft.DotNet.Build.Tasks.Feed.Tests.csproj
+index d100e0d8..1011bb5d 100644
+--- a/src/Microsoft.DotNet.Build.Tasks.Feed.Tests/Microsoft.DotNet.Build.Tasks.Feed.Tests.csproj
++++ b/src/Microsoft.DotNet.Build.Tasks.Feed.Tests/Microsoft.DotNet.Build.Tasks.Feed.Tests.csproj
+@@ -2,6 +2,7 @@
+ 
+   <PropertyGroup>
+     <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
++    <ExcludeFromSourceBuild>true</ExcludeFromSourceBuild>
+   </PropertyGroup>
+ 
+   <ItemGroup>
+diff --git a/src/Microsoft.DotNet.Build.Tasks.VisualStudio.Tests/Microsoft.DotNet.Build.Tasks.VisualStudio.Tests.csproj b/src/Microsoft.DotNet.Build.Tasks.VisualStudio.Tests/Microsoft.DotNet.Build.Tasks.VisualStudio.Tests.csproj
+index 1a9f8812..2781a275 100644
+--- a/src/Microsoft.DotNet.Build.Tasks.VisualStudio.Tests/Microsoft.DotNet.Build.Tasks.VisualStudio.Tests.csproj
++++ b/src/Microsoft.DotNet.Build.Tasks.VisualStudio.Tests/Microsoft.DotNet.Build.Tasks.VisualStudio.Tests.csproj
+@@ -2,6 +2,7 @@
+ 
+   <PropertyGroup>
+     <TargetFramework>net472</TargetFramework>
++    <ExcludeFromSourceBuild>true</ExcludeFromSourceBuild>
+   </PropertyGroup>
+ 
+   <ItemGroup>
+diff --git a/src/Microsoft.DotNet.Internal.DependencyInjection.Testing/Microsoft.DotNet.Internal.DependencyInjection.Testing.csproj b/src/Microsoft.DotNet.Internal.DependencyInjection.Testing/Microsoft.DotNet.Internal.DependencyInjection.Testing.csproj
+index b7b9c46b..b617eeb9 100644
+--- a/src/Microsoft.DotNet.Internal.DependencyInjection.Testing/Microsoft.DotNet.Internal.DependencyInjection.Testing.csproj
++++ b/src/Microsoft.DotNet.Internal.DependencyInjection.Testing/Microsoft.DotNet.Internal.DependencyInjection.Testing.csproj
+@@ -2,6 +2,7 @@
+ 
+   <PropertyGroup>
+     <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
++    <ExcludeFromSourceBuild>true</ExcludeFromSourceBuild>
+   </PropertyGroup>
+ 
+   <ItemGroup>
+diff --git a/src/Microsoft.DotNet.PackageValidation.Tests/Microsoft.DotNet.PackageValidation.Tests.csproj b/src/Microsoft.DotNet.PackageValidation.Tests/Microsoft.DotNet.PackageValidation.Tests.csproj
+index f69b97f4..aa49b523 100644
+--- a/src/Microsoft.DotNet.PackageValidation.Tests/Microsoft.DotNet.PackageValidation.Tests.csproj
++++ b/src/Microsoft.DotNet.PackageValidation.Tests/Microsoft.DotNet.PackageValidation.Tests.csproj
+@@ -3,6 +3,7 @@
+   <PropertyGroup>
+     <TargetFrameworks>netcoreapp3.1;net472</TargetFrameworks>
+     <IsPackable>false</IsPackable>
++    <ExcludeFromSourceBuild>true</ExcludeFromSourceBuild>
+   </PropertyGroup>
+ 
+   <ItemGroup>
+diff --git a/src/Microsoft.DotNet.SignTool.Tests/Microsoft.DotNet.SignTool.Tests.csproj b/src/Microsoft.DotNet.SignTool.Tests/Microsoft.DotNet.SignTool.Tests.csproj
+index 5892d29c..84113d26 100644
+--- a/src/Microsoft.DotNet.SignTool.Tests/Microsoft.DotNet.SignTool.Tests.csproj
++++ b/src/Microsoft.DotNet.SignTool.Tests/Microsoft.DotNet.SignTool.Tests.csproj
+@@ -3,6 +3,7 @@
+   <PropertyGroup>
+     <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
+     <LangVersion>Latest</LangVersion>
++    <ExcludeFromSourceBuild>true</ExcludeFromSourceBuild>
+   </PropertyGroup>
+ 
+   <ItemGroup>
+diff --git a/src/Microsoft.DotNet.VersionTools.Tasks.Tests/Microsoft.DotNet.VersionTools.Tasks.Tests.csproj b/src/Microsoft.DotNet.VersionTools.Tasks.Tests/Microsoft.DotNet.VersionTools.Tasks.Tests.csproj
+index 7d9fb9a1..9bcc5021 100644
+--- a/src/Microsoft.DotNet.VersionTools.Tasks.Tests/Microsoft.DotNet.VersionTools.Tasks.Tests.csproj
++++ b/src/Microsoft.DotNet.VersionTools.Tasks.Tests/Microsoft.DotNet.VersionTools.Tasks.Tests.csproj
+@@ -2,6 +2,7 @@
+ 
+   <PropertyGroup>
+     <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
 +    <ExcludeFromSourceBuild>true</ExcludeFromSourceBuild>
    </PropertyGroup>
  
