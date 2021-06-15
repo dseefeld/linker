@@ -160,13 +160,14 @@ if [[ $sourceLinkLine =~ $versionPattern ]]; then
   export SOURCE_LINK_BOOTSTRAP_VERSION=${BASH_REMATCH[1]}
 fi
 
-dotNetHostLine=`grep -m 1 'MicrosoftNETCoreDotNetHostVersion' "$packageVersionsPath"`
-versionPattern="<MicrosoftNETCoreDotNetHostVersion>(.*)</MicrosoftNETCoreDotNetHostVersion>"
-if [[ $dotNetHostLine =~ $versionPattern ]]; then
-  export DOTNET_HOST_BOOTSTRAP_VERSION=${BASH_REMATCH[1]}
-fi
+# DSEEFELD TODO:  I don't think we need this anymore, but need to verify when runtime repo is included
+# dotNetHostLine=`grep -m 1 'MicrosoftNETCoreDotNetHostVersion' "$packageVersionsPath"`
+# versionPattern="<MicrosoftNETCoreDotNetHostVersion>(.*)</MicrosoftNETCoreDotNetHostVersion>"
+# if [[ $dotNetHostLine =~ $versionPattern ]]; then
+#   export DOTNET_HOST_BOOTSTRAP_VERSION=${BASH_REMATCH[1]}
+# fi
 
-echo "Found bootstrap SDK $SDK_VERSION, bootstrap Arcade $ARCADE_BOOTSTRAP_VERSION, bootstrap SourceLink $SOURCE_LINK_BOOTSTRAP_VERSION, bootstrap DotNetHost $DOTNET_HOST_BOOTSTRAP_VERSION"
+echo "Found bootstrap SDK $SDK_VERSION, bootstrap Arcade $ARCADE_BOOTSTRAP_VERSION, bootstrap SourceLink $SOURCE_LINK_BOOTSTRAP_VERSION"
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
