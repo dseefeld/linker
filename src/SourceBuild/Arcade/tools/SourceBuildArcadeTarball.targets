@@ -99,6 +99,10 @@
       Command="git checkout $(CloneParam) $(RepoSha)" 
       WorkingDirectory="$(TarballRepoSourceDir)" />
 
+    <Exec 
+      Command="git submodule update --init --recursive" 
+      WorkingDirectory="$(TarballRepoSourceDir)" />
+
     <Message Text="--> Done Cloning Repo $(SourceBuildRepoName)" Importance="High" />
 
     <!-- <Exec 
