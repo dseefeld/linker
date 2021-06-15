@@ -24,6 +24,6 @@
     <PrivateSourceBuildReferencePackagesPackageVersion>1.0.0-beta.20623.1</PrivateSourceBuildReferencePackagesPackageVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <PrivateSourceBuiltArtifactsPackageVersion>0.1.0-6.0.100-bootstrap.1</PrivateSourceBuiltArtifactsPackageVersion>
+    <PrivateSourceBuiltArtifactsPackageVersion>0.1.0-6.0.100-bootstrap.3</PrivateSourceBuiltArtifactsPackageVersion>
   </PropertyGroup>
 </Project>
