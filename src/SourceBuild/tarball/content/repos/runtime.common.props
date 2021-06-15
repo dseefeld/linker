@@ -132,7 +132,6 @@
     <UseSourceBuiltSdkOverride Include="@(ArcadeCoreFxTestingOverride)" />
     <UseSourceBuiltSdkOverride Include="@(ArcadePackagingOverride)" />
     <UseSourceBuiltSdkOverride Include="@(ArcadeTargetFrameworkSdkOverride)" />
-    <UseSourceBuiltSdkOverride Include="@(ArcadeSharedFrameworkSdkOverride)" />
   </ItemGroup>
 
   <!-- Environment Variables -->

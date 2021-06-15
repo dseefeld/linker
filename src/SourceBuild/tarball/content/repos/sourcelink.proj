@@ -9,6 +9,7 @@
     <BuildCommandArgs>$(BuildCommandArgs) $(FlagParameterPrefix)ci</BuildCommandArgs>
     <BuildCommandArgs>$(BuildCommandArgs) $(FlagParameterPrefix)warnAsError $(ArcadeFalseBoolBuildArg)</BuildCommandArgs>
     <BuildCommandArgs>$(BuildCommandArgs) /p:ArcadeBuildFromSource=true</BuildCommandArgs>
+    <BuildCommandArgs>$(BuildCommandArgs) /p:CopyWipIntoInnerSourceBuildRepo=true</BuildCommandArgs>
     <BuildCommand>$(ProjectDirectory)build$(ShellExtension) $(BuildCommandArgs)</BuildCommand>
 
     <GlobalJsonFile>$(ProjectDirectory)global.json</GlobalJsonFile>

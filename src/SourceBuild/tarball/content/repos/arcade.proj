@@ -14,6 +14,7 @@
     <BuildCommandArgs>$(BuildCommandArgs) -ci</BuildCommandArgs>
     <BuildCommandArgs>$(BuildCommandArgs) $(FlagParameterPrefix)warnAsError $(ArcadeFalseBoolBuildArg)</BuildCommandArgs>
     <BuildCommandArgs>$(BuildCommandArgs) /p:ArcadeBuildFromSource=true</BuildCommandArgs>
+    <BuildCommandArgs>$(BuildCommandArgs) /p:CopyWipIntoInnerSourceBuildRepo=true</BuildCommandArgs>
 
     <BuildCommand>$(ProjectDirectory)\build$(ShellExtension) $(BuildCommandArgs)</BuildCommand>
 
@@ -38,7 +39,6 @@
     <BuiltSdkPackageOverride Include="@(ArcadeCoreFxTestingOverride)" />
     <BuiltSdkPackageOverride Include="@(ArcadePackagingOverride)" />
     <BuiltSdkPackageOverride Include="@(ArcadeTargetFrameworkSdkOverride)" />
-    <BuiltSdkPackageOverride Include="@(ArcadeSharedFrameworkSdkOverride)" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,8 +50,9 @@
     <RepositoryReference Include="sourcelink" />
   </ItemGroup>
 
+  <!-- DSEEFELD TODO: Temporarily skip this target for now until source-build NuGet packaging is build for 6.0 -->
   <Target Name="UsePreviouslySourceBuiltNuGet"
-          Condition="'$(OfflineBuild)' == 'true'"
+          Condition="'$(OfflineBuild)' == 'true' AND 'true' == 'false' "
           BeforeTargets="RepoBuild">
     <ItemGroup>
       <PreviouslySourceBuiltNuGetPackageFile Include="$(PrebuiltSourceBuiltPackagesPath)NuGet.Packaging.*.nupkg" />
