@@ -28,46 +28,7 @@
         <!-- Toolsets -->
         <RepositoryReference Include="sourcelink" />
         <RepositoryReference Include="arcade" />
-        <RepositoryReference Include="common" />
-
-        <!-- Tier 1 -->
-        <RepositoryReference Include="application-insights" />
-        <RepositoryReference Include="aspnet-xdt" />
-        <RepositoryReference Include="command-line-api" />
-        <RepositoryReference Include="cssparser" />
-        <RepositoryReference Include="netcorecli-fsc" />
-        <RepositoryReference Include="newtonsoft-json" />
-        <RepositoryReference Include="newtonsoft-json901" />
-        <RepositoryReference Include="xliff-tasks" />
-        <RepositoryReference Include="clicommandlineparser" />
-        <RepositoryReference Include="roslyn" />
-
-        <!-- Tier 2 -->
         <RepositoryReference Include="linker" />
-        <RepositoryReference Include="runtime" />
-        <RepositoryReference Include="runtime-portable" Condition="'$(TargetOS)' == 'Linux' and '$(BuildPortableRuntime)' == 'true'" />
-        <RepositoryReference Include="msbuild" />
-        <RepositoryReference Include="templating" />
-        <RepositoryReference Include="test-templates" />
-        <RepositoryReference Include="nuget-client" />
-
-        <!-- Tier 3 -->
-
-        <RepositoryReference Include="aspnetcore" />
-
-        <!-- Tier 4 -->
-
-        <RepositoryReference Include="sdk" />
-        <RepositoryReference Include="vstest" />
-        <RepositoryReference Include="fsharp" />
-
-        <!-- Tier 5 -->
-
-        <RepositoryReference Include="installer" />
-
-        <!-- Package source-build artifacts -->
-
-        <RepositoryReference Include="package-source-build" />
 
       </ItemGroup>
     </Otherwise>

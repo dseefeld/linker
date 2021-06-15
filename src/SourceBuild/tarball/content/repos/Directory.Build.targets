@@ -463,6 +463,29 @@
     </ItemGroup>
   </Target>
 
+  <Target Name="ExtractIntermediatePackages"
+          AfterTargets="Package">
+    <ItemGroup>
+      <_BuiltIntermediatePackages Condition="'$(PackagesOutput)' != ''" Include="$(PackagesOutput)/Microsoft.SourceBuild.Intermediate.*.nupkg" Exclude="$(PackagesOutput)/*.symbols.nupkg"/>
+      <_BuiltIntermediatePackages Condition="'@(PackagesOutputList)' != ''" Include="%(PackagesOutputList.Identity)/Microsoft.SourceBuild.Intermediate.*.nupkg" Exclude="%(PackagesOutputList.Identity)/*.symbols.nupkg"/>
+    </ItemGroup>
+
+    <ZipFileExtractToDirectory Condition="'@(_BuiltIntermediatePackages)' != ''"
+                            SourceArchive="%(_BuiltIntermediatePackages.Identity)"
+                            DestinationDirectory="$(SourceBuiltPackagesPath)extractArtifacts/"
+                            OverwriteDestination="true" />
+
+    <ItemGroup>
+      <SourceBuiltNupkgFiles Include="$(SourceBuiltPackagesPath)extractArtifacts/**\*.nupkg" />
+    </ItemGroup>
+
+    <Copy
+      Condition="'@(SourceBuiltNupkgFiles)' != ''"
+      SourceFiles="@(SourceBuiltNupkgFiles)"
+      DestinationFiles="@(SourceBuiltNupkgFiles -> '$(SourceBuiltPackagesPath)%(Filename)%(Extension)')" />
+
+  </Target>
+
   <Target Name="CopyPackage"
           AfterTargets="Package"
           Condition="'$(OutputPlacementRepoApiImplemented)' != 'true' AND ('$(PackagesOutput)' != '' OR '@(PackagesOutputList)' != '')"
@@ -533,6 +556,12 @@
     </ItemGroup>
 
     <Copy SourceFiles="@(ExtractedToolFiles)" DestinationFolder="$(ToolPackageExtractDir)/" />
+
+    <!-- DSEEFELD TODO: Temporary. With the version of arcade being used, this script is not executable. -->
+    <Exec Command="chmod 755 git-clone-to-dir.sh"
+      Condition=" '%(_ToolPackage.Id)' == 'Microsoft.DotNet.Arcade.Sdk' "
+      WorkingDirectory="$(ToolPackageExtractDir)%(_ToolPackage.Id)/tools/SourceBuild/" />
+
 
     <WriteLinesToFile File="$(RepoCompletedSemaphorePath)ExtractToolPackage.complete" Overwrite="true" />
   </Target>
