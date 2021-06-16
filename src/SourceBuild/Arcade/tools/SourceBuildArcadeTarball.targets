@@ -77,10 +77,8 @@
     </ItemGroup>
   </Target>
 
-  <!-- DSEEFELD TODO: Temporarily don't process sbrp repo until we have project for it in repos/ dir-->
   <Target Name="CloneRepoAndDependentsRecursive" 
-    DependsOnTargets="GetSourceBuildIntermediateNupkgNameConvention"
-    Condition=" '$(SourceBuildRepoName)' != 'source-build-reference-packages' ">
+    DependsOnTargets="GetSourceBuildIntermediateNupkgNameConvention">
     
     <Message Text="--> Start Cloning Repo $(SourceBuildRepoName)" Importance="High" />
     <PropertyGroup>

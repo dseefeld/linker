@@ -114,11 +114,11 @@
          See https://github.com/dotnet/source-build/issues/1914 for details. -->
     <PropertyGroup>
       <ArcadeSdkReplacementText>
-      logger_path=&quot;%24toolset_dir&quot;/%24%28cd &quot;$toolset_dir&quot; &amp;&amp; find . -name Microsoft.DotNet.Arcade.Sdk.dll \( -regex &apos;.*netcoreapp2.1.*&apos; -or -regex &apos;.*net6.0.*&apos; \) )
+      logger_path=&quot;%24toolset_dir&quot;/%24%28cd &quot;$toolset_dir&quot; &amp;&amp; find . -name Microsoft.DotNet.Arcade.Sdk.dll \( -regex &apos;.*netcoreapp2.1.*&apos; -or -regex &apos;.*net5.0.*&apos; \) )
       </ArcadeSdkReplacementText>
 
       <ArcadeLoggingReplacementText>
-      logger_path=&quot;%24toolset_dir&quot;/%24%28cd &quot;$toolset_dir&quot; &amp;&amp; find . -name Microsoft.DotNet.ArcadeLogging.dll \( -regex &apos;.*netcoreapp2.1.*&apos; -or -regex &apos;.*net6.0.*&apos; \) )
+      logger_path=&quot;%24toolset_dir&quot;/%24%28cd &quot;$toolset_dir&quot; &amp;&amp; find . -name Microsoft.DotNet.ArcadeLogging.dll \( -regex &apos;.*netcoreapp2.1.*&apos; -or -regex &apos;.*net5.0.*&apos; \) )
       </ArcadeLoggingReplacementText>
 
       <LoggerPathReplacementText>
@@ -470,19 +470,25 @@
       <_BuiltIntermediatePackages Condition="'@(PackagesOutputList)' != ''" Include="%(PackagesOutputList.Identity)/Microsoft.SourceBuild.Intermediate.*.nupkg" Exclude="%(PackagesOutputList.Identity)/*.symbols.nupkg"/>
     </ItemGroup>
 
+    <PropertyGroup Condition="'@(_BuiltIntermediatePackages)' != ''">
+        <_DestinationPath>$(SourceBuiltPackagesPath)</_DestinationPath>
+        <!-- SBRP packages unpack into the Reference packages directory instead of into blob-feed packages -->
+        <_DestinationPath Condition="$([System.String]::Copy(%(_BuiltIntermediatePackages.Identity)).Contains('source-build-reference-packages'))">$(ReferencePackagesDir)</_DestinationPath>
+    </PropertyGroup>
+
     <ZipFileExtractToDirectory Condition="'@(_BuiltIntermediatePackages)' != ''"
                             SourceArchive="%(_BuiltIntermediatePackages.Identity)"
                             DestinationDirectory="$(SourceBuiltPackagesPath)extractArtifacts/"
                             OverwriteDestination="true" />
 
     <ItemGroup>
-      <SourceBuiltNupkgFiles Include="$(SourceBuiltPackagesPath)extractArtifacts/**\*.nupkg" />
+      <SourceBuiltNupkgFiles Include="$(SourceBuiltPackagesPath)extractArtifacts/**/*.nupkg" />
     </ItemGroup>
 
     <Copy
       Condition="'@(SourceBuiltNupkgFiles)' != ''"
       SourceFiles="@(SourceBuiltNupkgFiles)"
-      DestinationFiles="@(SourceBuiltNupkgFiles -> '$(SourceBuiltPackagesPath)%(Filename)%(Extension)')" />
+      DestinationFiles="@(SourceBuiltNupkgFiles -> '$(_DestinationPath)%(Filename)%(Extension)')" />
 
   </Target>
 
