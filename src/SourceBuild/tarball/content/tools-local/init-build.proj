@@ -14,7 +14,8 @@
     <BuildTasksTarget Include="Restore;Build;InstallResolver" />
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(OfflineBuild)' == 'true'">
+  <!-- TODO DSEEFELD: Don't setup these sources now.  Need a switch for building to check prebuilts. -->
+  <PropertyGroup Condition="'$(OfflineBuild)' == 'true' AND 'false' == 'true' ">
     <BuildTasksOfflineSources>$(ReferencePackagesDir)%3B$(PrebuiltPackagesPath)</BuildTasksOfflineSources>
   </PropertyGroup>
 
@@ -43,10 +44,11 @@
           Condition="'$(OfflineBuild)' == 'true'"
           Inputs="$(MSBuildProjectFullPath)"
           Outputs="$(CompletedSemaphorePath)UnpackTarballs.complete" >
-    <MakeDir Directories="$(ReferencePackagesDir)"  Condition="'$(CustomReferencePackagesPath)' == ''" />
-    <Exec Command="tar -xzf $(ExternalTarballsDir)$(ReferencePackagesTarballName).*.tar.gz"
-          WorkingDirectory="$(ReferencePackagesDir)"
-          Condition="'$(CustomReferencePackagesPath)' == ''" />
+    <!--TODO DSEEFELD: Make this directory here even though we're no
+        longer unpacking into it because some restore sources are looking
+        for it.  Keeping this because we may want to place build ref packages
+        here just to keep them separate?  -->
+    <MakeDir Directories="$(ReferencePackagesDir)" />
 
     <MakeDir Directories="$(PrebuiltSourceBuiltPackagesPath)" Condition="'$(CustomPrebuiltSourceBuiltPackagesPath)' == ''" />
     <Exec Command="tar -xzf $(ExternalTarballsDir)$(SourceBuiltArtifactsTarballName).*.tar.gz"

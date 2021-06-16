@@ -7,8 +7,8 @@ SCRIPT_ROOT="$(cd -P "$( dirname "$0" )" && pwd)"
 usage() {
     echo "usage: $0"
     echo ""
-    echo "  Prepares a tarball to be built by downloading Private.SourceBuild.ReferencePackages.*.tar.gz and"
-    echo "  Private.SourceBuilt.Artifacts.*.tar.gz and installing the version of dotnet referenced in global.json"
+    echo "  Prepares a tarball to be built by downloading Private.SourceBuilt.Artifacts.*.tar.gz and"
+    echo "  installing the version of dotnet referenced in global.json"
     echo ""
 }
 
@@ -37,7 +37,6 @@ if [ ! -f $SCRIPT_ROOT/packages/archive/archiveArtifacts.txt ]; then
     exit -1
 fi
 
-downloadRefPkgs=true
 downloadArtifacts=true
 installDotnet=true
 
@@ -46,12 +45,6 @@ if ! command -v curl &> /dev/null
 then
     echo "  ERROR: curl not found.  Exiting..."
     exit -1
-fi
-
-# Check if the reference packages archive exists
-if [ -f $SCRIPT_ROOT/packages/archive/Private.SourceBuild.ReferencePackages.*.tar.gz ]; then
-    echo "  Private.SourceBuild.ReferencePackages.*.tar.gz exists...it will not be downloaded"
-    downloadRefPkgs=false
 fi
 
 # Check if Private.SourceBuilt artifacts archive exists
@@ -68,12 +61,6 @@ fi
 
 # Read the archive text file to get the archives to download and download them
 while read -r line; do
-    if [[ $line == *"Private.SourceBuild.ReferencePackages"* ]]; then
-        if [ "$downloadRefPkgs" == "true" ]; then
-            echo "  Downloading ref pkgs..."
-            (cd $SCRIPT_ROOT/packages/archive/ && curl -O $line)
-        fi
-    fi
     if [[ $line == *"Private.SourceBuilt.Artifacts"* ]]; then
         if [ "$downloadArtifacts" == "true" ]; then
             echo "  Downloading source-built artifacts..."
