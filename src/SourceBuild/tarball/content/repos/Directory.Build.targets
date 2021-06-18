@@ -490,6 +490,10 @@
       SourceFiles="@(SourceBuiltNupkgFiles)"
       DestinationFiles="@(SourceBuiltNupkgFiles -> '$(_DestinationPath)%(Filename)%(Extension)')" />
 
+    <RemoveDir
+      Condition="Exists('$(SourceBuiltPackagesPath)extractArtifacts/')"
+      Directories="$(SourceBuiltPackagesPath)extractArtifacts/" />
+
   </Target>
 
   <Target Name="CopyPackage"
