@@ -23,8 +23,6 @@
     <CallTarget Targets="
       UnpackTarballs;
       BuildXPlatTasks;
-      FetchSources;
-      WriteSourceLinkMetadata;
       ExtractToolPackage;
       GenerateRootFs;
       ApplyPatches;
@@ -140,35 +138,6 @@
     <MarkAndCatalogPackages PackagesToMark="@(PrebuiltSourceBuiltPackages)" CatalogOutputFilePath="$(SourceBuiltPoisonReportDataFile)" MarkerFileName="$(SourceBuiltPoisonMarkerFile)" />
 
     <WriteLinesToFile File="$(CompletedSemaphorePath)PoisonPrebuiltPackages.complete" Overwrite="true" />
-  </Target>
-
-  <Target Name="FetchSources"
-          Condition="'$(OfflineBuild)' != 'true'"
-          DependsOnTargets="GetCommonDarcCloneCommand"
-          Inputs="$(MSBuildProjectFullPath)"
-          Outputs="$(CompletedSemaphorePath)FetchSources.complete">
-    <Message Importance="High" Text="[$([System.DateTime]::Now.ToString('HH:mm:ss.ff'))] Getting source code for repos in Version.Details.xml." />
-    <Message Importance="High" Text="[$([System.DateTime]::Now.ToString('HH:mm:ss.ff'))] Running Darc command: '$(DarcCloneCommand)' from working dir $(ProjectDir)" />
-    <Exec Command="$(DarcCloneCommand) --repos-folder $(DarcCloneReposFolder)" WorkingDirectory="$(ProjectDir)" />
-    <Message Importance="High" Text="[$([System.DateTime]::Now.ToString('HH:mm:ss.ff'))] Done getting source code for repos in Version.Details.xml." />
-
-    <WriteLinesToFile File="$(CompletedSemaphorePath)FetchSources.complete" Overwrite="true" />
-  </Target>
-
-  <Target Name="WriteSourceLinkMetadata"
-          Condition="'$(OfflineBuild)' != 'true'"
-          DependsOnTargets="AcquireDarc;FetchSources"
-          Inputs="$(MSBuildProjectFullPath)"
-          Outputs="$(CompletedSemaphorePath)WriteSourceLinkMetadata.complete">
-    <Message Importance="High" Text="[$([System.DateTime]::Now.ToString('HH:mm:ss.ff'))] Writing out SourceLink metadata." />
-    <WriteSourceRepoProperties
-       VersionDetailsFile="$(RepositoryEngineeringDir)Version.Details.xml"
-       ClonedSubmoduleGitRootDirectory="$(ClonedSubmoduleGitRootDirectory)"
-       ClonedSubmoduleDirectory="$(ClonedSubmoduleDirectory)"
-       SourceBuildMetadataDir="$(GitInfoOutputDir)" />
-    <Message Importance="High" Text="[$([System.DateTime]::Now.ToString('HH:mm:ss.ff'))] Done writing out SourceLink metadata." />
-
-    <WriteLinesToFile File="$(CompletedSemaphorePath)WriteSourceLinkMetadata.complete" Overwrite="true" />
   </Target>
 
 </Project>
